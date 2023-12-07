@@ -14,7 +14,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import CoveragePlot from "../Charts/Coverage";
+//import CoveragePlot from "../Charts/Coverage";
 import ReadsOverTime from "../Charts/ReadsOverTime";
 import ReadsPerSample from "../Charts/ReadsPerSample";
 import ReferenceHeatmap from "../Charts/ReferenceHeatmap";
@@ -66,7 +66,7 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
 
     /* ----------------- C H A R T S ----------------------- */
     const charts = {
-        coverage: (
+        /*coverage: (
             <CoveragePlot
                 width={chartToDisplay === "coverage" ? "85%" : "35%"}
                 canShowReferenceMatches={false}
@@ -79,7 +79,7 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
                     (<ExpandChart handleClick={() => goToChart("coverage")}/>)
                 }
             />
-        ),
+        ),*/
         readsOverTime: (
             <ReadsOverTime
                 width={chartToDisplay === "readsOverTime" ? "85%" : "22%"}
@@ -131,7 +131,7 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
             ];
         }
         const els = [];
-        els.push(charts.coverage);
+        //els.push(charts.coverage);
         if (combinedData.temporal.length > 1) {
             els.push(charts.readsOverTime);
         }

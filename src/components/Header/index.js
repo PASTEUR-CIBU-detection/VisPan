@@ -57,7 +57,7 @@ class Header extends React.Component {
       <HeaderContainer>
 
         <div className="logo">
-          <a href="http://artic.network" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.pasteur.fr/fr/sante-publique/cibu" target="_blank" rel="noopener noreferrer">
             <img src={logo} alt={"logo"} width="96"/>
           </a>
         </div>

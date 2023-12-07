@@ -15,7 +15,7 @@
 import React, {useState, useEffect} from 'react';
 import CoveragePlot from "../Charts/Coverage";
 import ReadLengthDistribution from "../Charts/ReadLengthDistribution";
-import CoverageOverTime from "../Charts/CoverageOverTime";
+//:import CoverageOverTime from "../Charts/CoverageOverTime";
 // import RefSimilarity from "../Charts/RefSimilarity";
 import InfoRow from "./infoRow";
 import { getPostProcessingMenuItems, PostProcessingRunner } from "./postProcessing";
@@ -110,7 +110,7 @@ const SamplePanel = ({sampleName, sampleData, config, reference, socket, panelEx
             (<ExpandChart handleClick={() => goToChart("readLength")}/>)
         }
       />
-    ),
+    )/*,
     coverageOverTime: (
       <CoverageOverTime
         width={(showSinglePanel === "coverageOverTime") ? "100%" : "30%"}
@@ -124,7 +124,8 @@ const SamplePanel = ({sampleName, sampleData, config, reference, socket, panelEx
             (<ExpandChart handleClick={() => goToChart("coverageOverTime")}/>)
         }
       />
-    )/*,
+    )*/
+    /*,
     refSimilarity: (
         <RefSimilarity
             title={"Read mapping similarities"}
@@ -148,7 +149,7 @@ const SamplePanel = ({sampleName, sampleData, config, reference, socket, panelEx
     if (!panelExpanded) return null;
     const chartsToShow = showSinglePanel ?
     charts[showSinglePanel] :
-    [charts.coverage, charts.readLength, charts.coverageOverTime, charts.refSimilarity];
+    [charts.coverage, charts.readLength, charts.refSimilarity];
     return (
     <ChartContainer>
         {chartsToShow}
