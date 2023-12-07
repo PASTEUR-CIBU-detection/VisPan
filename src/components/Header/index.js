@@ -14,7 +14,7 @@
 
 import React from 'react';
 import PropTypes from "prop-types";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo_cibu.jpg"
 import {getLogYAxis, getRelativeReferenceMapping} from "../../utils/config";
 import MessageLog from "./MessageLog";
 import { TimerContext } from "../App";
