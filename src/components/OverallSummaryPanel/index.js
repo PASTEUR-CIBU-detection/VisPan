@@ -15,6 +15,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 //import CoveragePlot from "../Charts/Coverage";
+
+
+import RacebarPlot from '../Charts/RaceBar';
 import ReadsOverTime from "../Charts/ReadsOverTime";
 import ReadsPerSample from "../Charts/ReadsPerSample";
 import ReferenceHeatmap from "../Charts/ReferenceHeatmap";
@@ -80,20 +83,23 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
                 }
             />
         ),*/
-        readsOverTime: (
-            <ReadsOverTime
-                width={chartToDisplay === "readsOverTime" ? "85%" : "22%"}
-                title={"Mapped reads over time"}
-                temporalData={combinedData.temporal}
-                key="readsOverTime"
+        racebar: (
+            <RacebarPlot
+                width={chartToDisplay === "racebar" ? "85%" : "30%"}
+                title="Mapped Reads / Target"
+                data={dataPerSample}
                 config={config}
-                renderProp={ chartToDisplay === "readsOverTime" ?
+                sampleColours={sampleColours}
+                key="race"
+                goToSamplePanel={goToSamplePanel}
+                referencePanel={config.genome.referencePanel}
+                renderProp={ chartToDisplay === "racebar" ?
                     (<ContractChart handleClick={() => goToChart(false)}/>) :
-                    (<ExpandChart handleClick={() => goToChart("readsOverTime")}/>)
+                    (<ExpandChart handleClick={() => goToChart("racebar")}/>)
                 }
             />
         ),
-        readsPerSample: (
+        /*readsPerSample: (
             <ReadsPerSample
                 width={chartToDisplay === "readsPerSample" ? "85%" : "18%"}
                 title="Mapped Reads / Sample"
@@ -105,6 +111,19 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
                 renderProp={ chartToDisplay === "readsPerSample" ?
                     (<ContractChart handleClick={() => goToChart(false)}/>) :
                     (<ExpandChart handleClick={() => goToChart("readsPerSample")}/>)
+                }
+            />
+        ),*/
+        readsOverTime: (
+            <ReadsOverTime
+                width={chartToDisplay === "readsOverTime" ? "85%" : "22%"}
+                title={"Mapped reads over time"}
+                temporalData={combinedData.temporal}
+                key="readsOverTime"
+                config={config}
+                renderProp={ chartToDisplay === "readsOverTime" ?
+                    (<ContractChart handleClick={() => goToChart(false)}/>) :
+                    (<ExpandChart handleClick={() => goToChart("readsOverTime")}/>)
                 }
             />
         ),
@@ -132,12 +151,14 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
         }
         const els = [];
         //els.push(charts.coverage);
+        els.push(charts.racebar);
+        /*if (Object.keys(dataPerSample).length > 1) {
+            els.push(charts.readsPerSample);
+        }*/
         if (combinedData.temporal.length > 1) {
             els.push(charts.readsOverTime);
         }
-        if (Object.keys(dataPerSample).length > 1) {
-            els.push(charts.readsPerSample);
-        }
+        
         els.push(charts.referenceHeatmap);
         return els;
     };
