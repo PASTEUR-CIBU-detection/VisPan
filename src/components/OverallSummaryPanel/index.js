@@ -21,6 +21,7 @@ import RacebarPlot from '../Charts/RaceBar';
 import ReadsOverTime from "../Charts/ReadsOverTime";
 import ReadsPerSample from "../Charts/ReadsPerSample";
 import ReferenceHeatmap from "../Charts/ReferenceHeatmap";
+import ReferenceChart from "../Charts/ReferenceChart";
 import { ChartContainer, ExpandIconContainer } from "../SamplePanel/styles";
 import { IoIosExpand, IoIosContract } from "react-icons/io";
 
@@ -129,18 +130,33 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
         ),
         referenceHeatmap: (
             <ReferenceHeatmap
-                width={chartToDisplay === "referenceHeatmap" ? "85%" : "25%"}
+                width={chartToDisplay === "referenceHeatmap" ? "85%" : "10%"}
                 title={config.display.relativeReferenceMapping ? "Relative Reference Matches" : "Reference Matches"}
                 data={dataPerSample}
                 config={config}
                 referencePanel={config.genome.referencePanel}
-                key="refHeatmap"
+                key="refHeatmapNew"
                 renderProp={ chartToDisplay === "referenceHeatmap" ?
                     (<ContractChart handleClick={() => goToChart(false)}/>) :
                     (<ExpandChart handleClick={() => goToChart("referenceHeatmap")}/>)
                 }
             />
+        ),
+        referenceChart: (
+            <ReferenceChart
+                width={chartToDisplay === "referenceChart" ? "85%" : "5%"}
+                title={config.display.relativeReferenceMapping ? "Relative Reference Matches" : "Reference Matches!!!"}
+                data={dataPerSample}
+                config={config}
+                referencePanel={config.genome.referencePanel}
+                key="refHeatmap"
+                renderProp={ chartToDisplay === "referenceChart" ?
+                    (<ContractChart handleClick={() => goToChart(false)}/>) :
+                    (<ExpandChart handleClick={() => goToChart("referenceChart")}/>)
+                }
+            />
         )
+
     };
 
     const renderGraphs = () => {
@@ -158,8 +174,9 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
         if (combinedData.temporal.length > 1) {
             els.push(charts.readsOverTime);
         }
-        
         els.push(charts.referenceHeatmap);
+        els.push(charts.referenceChart);
+
         return els;
     };
 

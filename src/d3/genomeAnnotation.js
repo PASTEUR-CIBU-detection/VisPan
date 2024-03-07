@@ -13,6 +13,10 @@
  */
 
 import { mouse } from "d3-selection";
+import * as d3 from "d3";
+
+
+import {zoom} from "d3-zoom";
 
 export const getLeftRightTop = (that, scales) => {
   const [mouseX, mouseY] = mouse(that); // [x, y] x starts from left, y starts from top
@@ -43,7 +47,86 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
       .style("top", top)
       .style("visibility", "visible")
       .html(`Gene ${d}<br/> ${genes[d].start} - ${genes[d].end}`);
-    }
+  }
+
+  function handleGeneClick(d,i){
+    //alert(d +" "+i);
+    //alert(scales.x(genes[d].end));
+    let x = scales.x(genes[d].start);
+    let y = scales.x(genes[d].end);
+    //console.log(svg._groups[0][0].viewBox);
+    console.log("click");
+    console.log(genes[d]);
+
+    
+
+
+    alert("gene "+d+" " +x +" "+y);
+
+    console.log(svg);
+    /*let view = svg.getAttribute("viewBox");
+    console.log(view);
+
+    let viewBox = {x:x,y:0,w:y-x,h:svg[0].viewBox.w};
+    svg[0].viewBox = viewBox;*/
+    //svg.selectAll(".coverageLine").remove();
+    
+    // remove svg
+    //let tt = d3.select(".coverageLine").remove();
+
+    let tt = d3.select(".coverageLine");
+    //d3.zoom().scaleBy( tt , 2);
+
+    //tt.call(d3.zoom().on("zoom", zoomed));
+    var zoom = d3.zoom().on('zoom', zoomed);
+    tt.call(zoom);
+    //const zoomd3 = zoom();
+
+    //zoomd3.scaleBy(tt, 1.5, [0.0]);
+
+    //tt.setAttribute("currentScale", 1.5);
+    //let transi =tt.transition().duration(100);
+    //console.log(transi);
+
+    //let line = svg.selectAll(".coverageLine");
+    
+    //zoomd3.translateBy(tt, x, y);
+    //console.log(zoomd3);
+    //zoomd3.scaleBy( tt.transition().duration(100) ,2);
+    //zoomd3.scaleBy(line, 1.3);
+    //console.log(svg);
+    //console.log(line);
+    //line.attr("viewBox", "0 0 20 40");
+    //console.log(svg.attr('viewBox'));
+    //svg.attr('viewBox',  "0 0 200 300");
+    
+    //svg = svg.selectAll(".coverageLine").attr("viewBox", "0 0 20 300");
+    
+    /*svg.transition().duration(750).call(
+      zoom.transform
+      d3.zoomIdentity.translate(200, 200).scale(40).translate(-x,-y),
+      //d3.pointer(event)
+    );*/
+    
+    
+  }
+
+  function zoomed(event) {
+      let tt =d3.select(".coverageLine");
+      //console.log("ICI");
+      //console.log(event);
+      //console.log(tt);
+
+      //console.log(event.transform.x);
+
+      tt.attr("transform", event.transform);
+      //console.log(tt);
+      
+      
+      //tt.scale(0.5);
+
+  }
+
   function handleMouseOut() {
     hoverSelection.style("visibility", "hidden");
   }
@@ -84,7 +167,8 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
     .attr("width", (name) => scales.x(genes[name].end) - scales.x(genes[name].start))
     .attr("height", geneHeight)
     .on("mouseout", handleMouseOut)
-    .on("mousemove", handleGeneMove);
+    .on("mousemove", handleGeneMove)
+    .on("click", handleGeneClick);
 
   genesSel.append("text")
       .attr("class", "gene-text")

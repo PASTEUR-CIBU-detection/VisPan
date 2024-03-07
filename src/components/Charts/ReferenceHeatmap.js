@@ -19,7 +19,8 @@ import {heatColourScale} from "../../utils/colours";
 import {getRelativeReferenceMapping} from "../../utils/config";
 import Container, {Title, HoverInfoBox} from "./styles";
 
-const EMPTY_CELL_COLOUR = "rgba(256, 256, 256, 0.15)"
+//const EMPTY_CELL_COLOUR = "rgba(256, 256, 256, 0.15)"
+const EMPTY_CELL_COLOUR = "rgba(0, 0, 0, 0.15)"
 
 /* given the DOM dimensions of the chart container, calculate the chart geometry (used by the SVG & D3) */
 const calcChartGeom = (DOMRect) => ({
@@ -57,9 +58,12 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
       flat list, with each value itself a list:
         [sampleIdx, refPanelMatchIdx, fracIdentity]
     */
+    console.log(data);
+    console.log(names);
+    console.log(referencePanel);
 
     const d3data = Array.from(new Array(names.length*referencePanel.length));
-
+    console.log(d3data);
     let dataIdx = 0;
 
     let maxCount = 0;

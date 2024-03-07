@@ -75,6 +75,30 @@ export const drawXAxis = (svg, chartGeom, scales, numTicks, isTime, suffix) => {
     .call(axisFn);
 }
 
+export const drawXAxisShift = (svg, chartGeom, scales, numTicks, isTime, suffix, xshift) => {
+  removeXAxis(svg);
+  let tickFormatter = null;
+  if (isTime) {
+    tickFormatter = makeTimeFormatter();
+  }
+  if (suffix && !isTime) {
+    tickFormatter = (val) => `${val}${suffix}`;
+  }
+
+  const axisFn = typeof scales.x.invert === "function" ? /* ordinal scales don't have this */
+    axisBottom(scales.x).ticks(numTicks).tickFormat(tickFormatter) :
+    numTicks === 0 ? 
+      axisBottom(scales.x).tickValues([]) :
+      axisBottom(scales.x);
+
+  svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", `translate(0,${chartGeom.height - chartGeom.spaceBottom})`)
+    .style("font-family", dataFont)
+    .style("font-size", "12px")
+    .call(axisFn);
+}
+
 export const drawYAxis = (svg, chartGeom, scales, numTicks, suffix) => {
   removeYAxis(svg);
   let tickFormatter = null;
@@ -99,9 +123,20 @@ export const drawAxes = (svg, chartGeom, scales, {xTicks=5, yTicks=5, isTime=fal
   drawYAxis(svg, chartGeom, scales, yTicks, ySuffix)
 };
 
+export const drawAxesShift = (svg, chartGeom, scales, {xTicks=5, yTicks=5, isTime=false, xSuffix=false, ySuffix=false,xshift}={}) => {
+  drawXAxisShift(svg, chartGeom, scales, xTicks, isTime, xSuffix,xshift)
+  drawYAxis(svg, chartGeom, scales, yTicks, ySuffix)
+};
+
 export const calcXScale = (chartGeom, maxX) => {
   return scaleLinear()
     .domain([0, maxX])
+    .range([chartGeom.spaceLeft, chartGeom.width - chartGeom.spaceRight]);
+}
+
+export const calcXScaleShift = (chartGeom, fromX,maxX) => {
+  return scaleLinear()
+    .domain([fromX, maxX])
     .range([chartGeom.spaceLeft, chartGeom.width - chartGeom.spaceRight]);
 }
 

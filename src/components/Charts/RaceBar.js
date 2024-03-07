@@ -92,7 +92,7 @@ class RacebarPlot extends React.Component {
     this.getSeriesItem = (category) =>{
       for (var i = 0; i < this.series1.dataItems.length; i++) {
         var dataItem = this.series1.dataItems[i];
-        if (dataItem.get("categoryY") == category) {
+        if (dataItem.get("categoryY") === category) {
           return dataItem;
         }
       }
@@ -117,7 +117,7 @@ class RacebarPlot extends React.Component {
           var deltaPosition =
             (index - dataItem.get("index", 0)) / this.series1.dataItems.length;
           // set index to be the same as series data item index
-          if (dataItem.get("index") != index) {
+          if (dataItem.get("index") !== index) {
             dataItem.set("index", index);
             // set deltaPosition instanlty
             dataItem.set("deltaPosition", -deltaPosition);
@@ -165,7 +165,7 @@ class RacebarPlot extends React.Component {
       }),
     );
     // set the charts color
-    var myTheme = am5.Theme.new(root);
+    //var myTheme = am5.Theme.new(root);
     
     
     //console.log(this.props.theme.articWhite);

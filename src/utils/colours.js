@@ -13,6 +13,7 @@
  */
 
 import { scaleSequential } from "d3-scale";
+import { scaleSequentialPow } from "d3-scale";
 import * as chromatic from "d3-scale-chromatic";
 import { color as d3color } from "d3-color";
 
@@ -20,7 +21,13 @@ import { color as d3color } from "d3-color";
  * Heatmap scale over 0-100 (i.e. percentage)
  */
 export const heatColourScale = scaleSequential(chromatic.interpolateYlOrRd)
-  .domain([100, 0]);
+  .domain([0, 100]);
+/*export const heatColourScale = scaleSequential(chromatic.interpolateGreys)
+  .domain([0, 100]);*/
+/*export const heatColourScale = scaleSequentialPow(chromatic.interpolateGreys)
+  .domain([0, 100]);*/
+
+
 
 export const defaultLineColour = "#F6EECA";
 
@@ -57,7 +64,7 @@ const _interpolatorToArray = (interp, n, ignoreStart=0, ignoreEnd=0, luminanceTh
  */
 export const availableColours = [
   /* ROW 1 */
-  _interpolatorToArray(chromatic.interpolateYlGnBu, 10, 1, 1),
+ _interpolatorToArray(chromatic.interpolateYlGnBu, 10, 1, 1),
   _interpolatorToArray(chromatic.interpolateRdYlBu, 10, 0, 1),
   _interpolatorToArray(chromatic.interpolateViridis, 10, 1, 0),
   _interpolatorToArray(chromatic.interpolateCool, 10, 0, 0),
@@ -70,6 +77,7 @@ export const availableColours = [
   _interpolatorToArray(chromatic.interpolateBuPu, 10, 2, 1),
   _interpolatorToArray(chromatic.interpolateYlGn, 10, 2, 1),
   _interpolatorToArray(chromatic.interpolateGreys, 10, 0, 1, 0),
+
 ];
 
 
