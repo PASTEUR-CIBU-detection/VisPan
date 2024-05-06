@@ -91,6 +91,20 @@ const annotationParser = async () => {
 const createReadsFromAnnotation = (fastqStem, annotations) => {
     const reads = [];
     const barcodes = new Set();
+
+    let dict  = {};
+    
+    let genes = global.config.genome.genes;
+    for(gene in genes){
+        let tabref = genes[gene].refs.split(',');
+        
+        for (rf  of tabref) {
+            dict[rf]= genes[gene].start;
+        }
+    }
+    //console.log(global.config.display.readOffset);
+    //console.log(dict);
+
     annotations.forEach((d, index) => {
         const dataPoint = new Map();
         const barcode =  d.barcode === "none" ? UNASSIGNED_LABEL : d.barcode;
@@ -125,19 +139,35 @@ const createReadsFromAnnotation = (fastqStem, annotations) => {
             dataPoint.endBase = negStrand ? start_coords : end_coords;
             dataPoint.strand = negStrand ? "-" : "+";
 
+            
+            // only store ref matches for mapped reads
+            dataPoint.topRefHit = referenceCall;
+            //console.log(dataPoint.topRefHit+" "+dataPoint.startBase);
+            let shift = dict[dataPoint.topRefHit];
+            if(shift !=1 ){
+                dataPoint.startBase += shift;
+                dataPoint.endBase += shift;
+            }
+            
+            
             // calculate read position as a fraction of the genome
-            if (global.config.display.readOffset) {
+
+            /*if (global.config.display.readOffset) {
                 // if a readOffset has been provided then all the reads are being mapped to a subgenomic region and
                 // the start and end fractions need to be adjusted so the coverage fits on the full genome plot.
-                dataPoint.startFrac = (dataPoint.startBase + global.config.display.readOffset) / global.config.genome.length;
-                dataPoint.startFrac = (dataPoint.endBase + global.config.display.readOffset) / global.config.genome.length;
+                dataPoint.startFrac = (dataPoint.startBase + global.config.display.readOffset) / global.config.genome.length;                
+                //dataPoint.startFrac = (dataPoint.endBase + global.config.display.readOffset) / global.config.genome.length;
+                dataPoint.endFrac = (dataPoint.endBase + global.config.display.readOffset) / global.config.genome.length;
+                
             } else {
                 dataPoint.startFrac = dataPoint.startBase / ref_len;
                 dataPoint.endFrac = dataPoint.endBase / ref_len;
-            }
+            }*/
+            dataPoint.startFrac = (dataPoint.startBase) / global.config.genome.length;                
+                //dataPoint.startFrac = (dataPoint.endBase + global.config.display.readOffset) / global.config.genome.length;
+            dataPoint.endFrac = (dataPoint.endBase ) / global.config.genome.length;
 
-            // only store ref matches for mapped reads
-            dataPoint.topRefHit = referenceCall;
+            //console.log(ref_len+" "+dataPoint.topRefHit+" "+dataPoint.startBase+" "+dataPoint.startFrac );
             dataPoint.topRefHitSimilarity = parseInt(d.num_matches, 10) / parseInt(d.mapping_len, 10);
         }
         dataPoint.readLength = readLength;

@@ -58,12 +58,12 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
       flat list, with each value itself a list:
         [sampleIdx, refPanelMatchIdx, fracIdentity]
     */
-    console.log(data);
+    /*console.log(data);
     console.log(names);
-    console.log(referencePanel);
+    console.log(referencePanel);*/
 
     const d3data = Array.from(new Array(names.length*referencePanel.length));
-    console.log(d3data);
+    //console.log(d3data);
     let dataIdx = 0;
 
     let maxCount = 0;

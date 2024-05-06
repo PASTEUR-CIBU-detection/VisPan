@@ -130,7 +130,7 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
         ),
         referenceHeatmap: (
             <ReferenceHeatmap
-                width={chartToDisplay === "referenceHeatmap" ? "85%" : "10%"}
+                width={chartToDisplay === "referenceHeatmap" ? "85%" : "30%"}
                 title={config.display.relativeReferenceMapping ? "Relative Reference Matches" : "Reference Matches"}
                 data={dataPerSample}
                 config={config}
@@ -142,7 +142,7 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
                 }
             />
         ),
-        referenceChart: (
+        /*referenceChart: (
             <ReferenceChart
                 width={chartToDisplay === "referenceChart" ? "85%" : "5%"}
                 title={config.display.relativeReferenceMapping ? "Relative Reference Matches" : "Reference Matches!!!"}
@@ -155,7 +155,7 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
                     (<ExpandChart handleClick={() => goToChart("referenceChart")}/>)
                 }
             />
-        )
+        )*/
 
     };
 
@@ -175,7 +175,7 @@ const OverallSummaryPanel = ({combinedData, dataPerSample, config, goToSamplePan
             els.push(charts.readsOverTime);
         }
         els.push(charts.referenceHeatmap);
-        els.push(charts.referenceChart);
+        //els.push(charts.referenceChart);
 
         return els;
     };
