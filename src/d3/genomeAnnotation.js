@@ -13,7 +13,9 @@
  */
 
 import { mouse } from "d3-selection";
+
 import * as d3 from "d3";
+//import {brushX} from 'd3-brush';
 
 
 import {zoom} from "d3-zoom";
@@ -130,7 +132,7 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
   function handleMouseOut() {
     hoverSelection.style("visibility", "hidden");
   }
-  
+
   const ampliconRoof = chartGeom.height - chartGeom.spaceBottom + 24; /* all primers & genes below this */
   const ampliconHeight = 8;
   console.log(amplicons);

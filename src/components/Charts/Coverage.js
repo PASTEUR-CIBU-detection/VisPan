@@ -17,6 +17,7 @@ import { select } from "d3-selection";
 
 
 import * as d3 from "d3";
+import {event} from'd3-selection'
 import {brushX} from 'd3-brush';
 
 
@@ -96,16 +97,27 @@ class CoveragePlot extends React.Component {
             
         }
 
-        this.brush = d3.brushX()                   // Add the brush feature using the d3.brush function
-            .extent( [ [0,0], [100,100] ] )  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
-            .on("end", this.updateChart)   
+        this.brush = brushX()                   // Add the brush feature using the d3.brush function
+            .extent( [ [0,0], [50,50] ] )  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+            .on("start", this.brushstart)
+            .on("brush", this.brushed)
+            .on("end", this.updateChart);   
 
+
+            
         
         this.updateChart = (event) => {
             console.log(event);
         }
 
-        
+        this.brushstart = (selection) => {
+            console.log("brushstart");
+            console.log(selection);
+        }
+        this.brushed = (selection) => {
+            console.log("brushsed");
+            console.log(selection);
+        }
 
         this.options =[];
         let i= 0;
@@ -161,33 +173,10 @@ class CoveragePlot extends React.Component {
 
     }
     redraw () {
-        this.state.svg.selectAll("*").remove();
-
-        // Add the brushing
-        this.state.svg.append("g")
-            .attr("class", "brush")
-            .call(this.brush);
-
-        /*const brush = d3.brushX()
-            .on("start", brushstart)
-            .on("brush", brushed)
-            .on("end", brushended);
-
-        console.log(brush);
         
-        function brushstart({selection}) {
-            console.log(selection);
-        }
-        function brushed({selection}) {
-            console.log(selection);
-        }
-        function brushended({selection}) {
-            console.log(selection);
-        }
-        this.state.svg.append("g")
-            .attr("class", "brush")
-            .call(brush);
-        //this.state.svg.call(brush);*/
+        //this.state.svg.select("g").selectAll("*").remove();
+        this.state.svg.selectAll("*").remove();
+       
 
         
 
@@ -328,7 +317,56 @@ class CoveragePlot extends React.Component {
             console.log(amplis);
             drawGenomeAnnotation(this.state.svg, this.state.chartGeom, scales, g, amplis, this.state.hoverSelection);
 
+             // Add the brushing
+            console.log(this.state.svg);
+            //this.state.svg.attr("viewBox", [0, 0, 500, 300]).style("display", "block");
+            /*this.state.svg.append("rect")
+                .classed("border-box", true)
+                .attr("height", 150)
+                .attr("width", 100)
+                .attr("y",100);*/
 
+                //.call(this.brush);
+                /*.call(d3.brushX()
+                    .extent([[0, 0], [100, 100]])
+                    .on("end", brushend));*/
+            
+            var margin = {top: 20, right: 20, bottom: 30, left: 40};
+            var height = 440;
+            var width = 600;
+            var focusHeight = 100;
+
+            const brush = d3.brushX()
+                .extent([[margin.left, 0.5], [width - margin.right, focusHeight - margin.bottom + 0.5]])
+                .on("brush", brushed)
+                .on("end", brushend);
+              
+            function brushed({selection}) {
+                console.log("Brushed");
+                if (selection) {
+                    /*svg.property("value", selection.map(x.invert, x).map(d3.utcDay.round));
+                    svg.dispatch("input");
+                    focusedArea = svg.property('value');
+                    update();*/
+                    console.log(selection);
+                }
+            }
+
+            function brushend({selection}) {
+                if (selection) {
+                    console.log(selection);
+                }
+                /*console.log(event);
+                if (!event.source.target) return;
+                if (event.selection !== null) {
+                    const extent = event.selection;
+                    d3.select(this).call(event.target.move, extent);
+                }*/
+            }
+            /*this.state.svg.append("g")
+                .call(this.brush);*/
+            this.state.svg.append("g").call(brush);
+            console.log("add brush");
         //}
     }
     componentDidMount() {

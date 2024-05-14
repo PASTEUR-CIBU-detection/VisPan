@@ -283,13 +283,16 @@ class RacebarPlot extends React.Component {
     this.series1.columns.template.adapters.add("stroke", function(stroke, target) {
         //return chart.get("colors").getIndex(series1.columns.indexOf(target));
         
-        //console.log(series1.columns.indexOf(target));
-        //console.log(data[series1.columns.indexOf(target)].name);
-        return props.sampleColours[samples[series1.columns.indexOf(target)].name];
+        if (data[series1.columns.indexOf(target)] !== undefined){
+          return props.sampleColours[samples[series1.columns.indexOf(target)].name];
+        }
     });
     this.series1.columns.template.adapters.add("fill", function(fill, target) {
         //return chart.get("colors").getIndex(series1.columns.indexOf(target));
-        return  props.sampleColours[data[series1.columns.indexOf(target)].name];
+        
+        if (data[series1.columns.indexOf(target)] !== undefined){
+          return  props.sampleColours[data[series1.columns.indexOf(target)].name];
+        }
     });
 
 
