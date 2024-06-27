@@ -217,7 +217,7 @@ class CoveragePlot extends React.Component {
                     xyValues: this.props.coverage[name].coverage.map((cov, idx) => [parseInt(idx*basesPerBin, 10), cov]),
                     colour: this.props.sampleColours[name] || "#FFFFFF"
                 }));
-            console.log(this.state.gene);
+            
             console.log(Object.keys(this.state.gene).length);
             //if (this.state.gene != {}){
             if (Object.keys(this.state.gene).length !== 0){
@@ -225,8 +225,13 @@ class CoveragePlot extends React.Component {
                 console.log(this.state.gene);
                 let name = this.state.gene.nameGene;
                 console.log(name);
-                g ={};   
-                g[name]= this.state.gene;
+                console.log(g);
+                console.log(this.state.gene);
+                let g2 ={};   
+                g2[name]= this.state.gene;
+                g2[name]= g[name];
+                g =g2;
+                console.log(g);
 
                 amplis = filterampli(this.props.config.primers.amplicons,this.state.gene.start,this.state.gene.end);
                 let xYValNew = filterampli(data[0].xyValues,this.state.gene.start,this.state.gene.end);
@@ -314,7 +319,8 @@ class CoveragePlot extends React.Component {
                 hoverDisplayFunc
             });
             drawAxes(this.state.svg, this.state.chartGeom, scales, {xSuffix: "bp", ySuffix});
-            console.log(amplis);
+            //console.log(amplis);
+            //console.log(g);
             drawGenomeAnnotation(this.state.svg, this.state.chartGeom, scales, g, amplis, this.state.hoverSelection);
 
              // Add the brushing
@@ -544,6 +550,10 @@ class CoveragePlot extends React.Component {
             hoverDisplayFunc
         });
         drawAxes(this.state.svg, this.state.chartGeom, scales, {xSuffix: "bp", ySuffix});
+
+        console.log(g);
+
+
         drawGenomeAnnotation(this.state.svg, this.state.chartGeom, scales, g, amplis, this.state.hoverSelection);
 
 

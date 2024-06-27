@@ -31,6 +31,26 @@ export const getLeftRightTop = (that, scales) => {
 /* draw the genes (annotations) */
 export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, hoverSelection) => {
   // svg.selectAll(".gene").remove(); /* only added once, don't need to remove what's not there */
+  //console.log(genes)
+  console.log(genes);
+  let k=0;
+  let amplisname = []
+  for (let g in genes){
+    
+    let tmp =genes[g].amplis;
+    
+    const myArray = tmp.split(",");
+    for (let i = 0; i < myArray.length; i++) {
+      amplisname[k] = myArray[i];
+      k++;
+
+    }
+     
+    
+    //amplisname[k] = genes[g].amplis
+
+  }
+  console.log(amplisname);
 
   function handleAmpliconMove(d, i) {
     const [left, right, top] = getLeftRightTop(this, scales);
@@ -39,7 +59,8 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
       .style("right", right)
       .style("top", top)
       .style("visibility", "visible")
-      .html(`Amplicon ${i + 1} – ${d[0]}-${d[1]}bp`);
+      //.html(`Amplicon name ${i + 1} – ${d[0]}-${d[1]}bp`);
+      .html(`Amplicon name `+ amplisname[i]);
     }
   function handleGeneMove(d, i) {
     const [left, right, top] = getLeftRightTop(this, scales);

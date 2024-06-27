@@ -205,6 +205,9 @@ class RacebarPlot extends React.Component {
     const xAxisRenderer = am5xy.AxisRendererX.new(root, {});
     xAxisRenderer.labels.template.setAll({
       rotation: -45,
+      
+      oversizedBehavior: "fit",
+      minGridDistance: 1
     });
     // Create X-Axis
     this.xAxis = chart.xAxes.push(
@@ -214,6 +217,8 @@ class RacebarPlot extends React.Component {
         tooltip: am5.Tooltip.new(root, {})
       })
     );
+    console.log(this.xAxis.renderer);
+    //this.xAxis.renderer.minGridDistance = 30;
 
     
     this.xAxis.data.setAll(data);
@@ -248,9 +253,11 @@ class RacebarPlot extends React.Component {
         locationX: 1,
         sprite: am5.Label.new(root, {
           text: "{mappedcount.formatNumber('#.# a')}",
-          fill: root.interfaceColors.get("alternativeText"),
+          //fill: root.interfaceColors.get("alternativeText"),
+          fill:"white",
           centerX: am5.p100,
           centerY: am5.p100,
+          
           
           //fill: am5.Color.lighten(this.series1.get("fill"), 0.7)
           populateText: true
@@ -296,7 +303,6 @@ class RacebarPlot extends React.Component {
     });
 
 
-    
 
     //this.series1.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5, strokeOpacity: 0 });
 
@@ -315,6 +321,7 @@ class RacebarPlot extends React.Component {
   }
   componentDidUpdate(){
 
+    console.log("RaceBar update");
     let data =[];
     for (const [key, value] of Object.entries(this.props.data)) {
         //console.log(`${key}: ${value}`);
@@ -331,16 +338,25 @@ class RacebarPlot extends React.Component {
     }
 
 
-    this.xAxis.data.setAll(data);
+    //this.xAxis.data.setAll(data);
     this.series1.data.setAll(data);
+    
+    console.log(this.xAxis.dataItems);
+
+    /*this.xAxis.dataItems.sort(function (x, y) {
+      //return x.get("index") - y.get("index");
+      return x.dataContext.mappedCount - y.dataContext.mappedCount;
+    });*/
+    //console.log(this.xAxis.dataItems);
+    //console.log(this.series1);
     
     // Bar Race
     /*this.series1.dataItems.sort(function (x, y) {
         //console.log(y.get("valueY"));
         //return y.get("valueY") - x.get("valueY"); // descending
         return x.get("valueY") - y.get("valueY"); // ascending
-    });
-
+    });*/
+/*
     let why = this;
     // go through each axis item
     am5.array.each(this.yAxis.dataItems, function (dataItem) {
