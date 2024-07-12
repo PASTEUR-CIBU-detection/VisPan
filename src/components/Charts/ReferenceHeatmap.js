@@ -63,7 +63,7 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
     console.log(referencePanel);*/
 
     const d3data = Array.from(new Array(names.length*referencePanel.length));
-    //console.log(d3data);
+    console.log(d3data);
     let dataIdx = 0;
 
     let maxCount = 0;
@@ -265,6 +265,8 @@ class ReferenceHeatmap extends React.Component {
             sampleNames.length,     // number of columns
             referencePanel.length   // number of rows
         );
+        console.log(sampleNames+" "+this.props.data);
+        console.log(this.props.data[sampleNames['barcode01']])
         drawHeatMap({
             names: sampleNames,
             referencePanel,

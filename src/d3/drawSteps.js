@@ -32,7 +32,7 @@ import { mouse } from "d3-selection";
  * @param {false || function} args.hoverDisplayFunc OPTIONAL. Function to displayHTML.
  *    Function args: 1 object with props `name` (from `data` array above), `xValue`, `yValue`
  */
-export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, hoverSelection=false, hoverDisplayFunc=false}) => {
+export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, hoverSelection=false, hoverDisplayFunc=false,amplisname,amplis,comp}) => {
     /* https://stackoverflow.com/questions/8689498/drawing-multiple-lines-in-d3-js */
     let pathGenerator;
     if (fillBelowLine) {
@@ -48,6 +48,7 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
             .curve(curveStep);
     }
 
+    console.log(comp);
     const colours = data.map((d) => d.colour);
 
     function handleMouseMove(d, i) {
@@ -63,7 +64,27 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
         for (xyValuesIdx=0; xyValuesIdx<d.length; xyValuesIdx++) {
           if (d[xyValuesIdx][0]>xValueApprox) break;
         }
-        const html = hoverDisplayFunc({name: data[i].name, xValue: d[xyValuesIdx][0], yValue: d[xyValuesIdx][1]})
+        
+        let ampliname=data[i].name;
+        if(amplis != null){
+            let xval = d[xyValuesIdx][0];
+            
+            for (let i=0;i<amplis.length;i++){
+                //console.log(amplis[i][0]+" "+amplis[i][1]+" "+xval);
+                if((xval>=amplis[i][0])&&(xval <=amplis[i][1])){
+                    ampliname = amplisname[i];
+                    
+                    break;
+                }
+                
+               
+            }
+
+        }
+
+        //const html = hoverDisplayFunc({name: data[i].name, xValue: d[xyValuesIdx][0], yValue: d[xyValuesIdx][1]})
+        const html = hoverDisplayFunc({name: ampliname, xValue: d[xyValuesIdx][0], yValue: d[xyValuesIdx][1]})
+
 
         hoverSelection
           .style("left", left)
@@ -76,6 +97,64 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
         if (!hoverSelection) return;
         hoverSelection.style("visibility", "hidden");
     }
+    function handleMouseClick(d,i) {
+
+
+
+        console.log("click");
+        const [left, right, top] = getLeftRightTop(this, scales);
+
+        const xValueApprox = scales.x.invert(mouse(this)[0]);
+        /* find the xyValue closest to this -- they are in order so it's not too hard */
+        /* bisect algorithm would be faster */
+        let xyValuesIdx = 0;
+        for (xyValuesIdx=0; xyValuesIdx<d.length; xyValuesIdx++) {
+          if (d[xyValuesIdx][0]>xValueApprox) break;
+        }
+        
+
+
+        let geneName="";
+        let genes = comp.props.config.genome.genes;
+        
+        if(genes != null){
+            let xval = d[xyValuesIdx][0];
+            console.log(xval);
+            for (let gene in genes){
+                console.log(gene);
+                //console.log(gene.start +" "+gene.end);
+                if((xval>=genes[gene].start)&&(xval <=genes[gene].end)){
+                    geneName = gene;
+                    console.log(geneName);
+                    break;
+                }
+            }
+
+            /*for (let i=0;i<genes.length;i++){
+                //console.log(amplis[i][0]+" "+amplis[i][1]+" "+xval);
+                if((xval>=amplis[i][0])&&(xval <=amplis[i][1])){
+                    genenname = amplisname[i];
+                    
+                    break;
+                }
+                
+               
+            }*/
+
+        }
+        console.log(geneName);
+        console.log(comp.props.config.genome.genes);
+        comp.setGene(geneName);
+        if (!hoverSelection) return;
+        hoverSelection.style("visibility", "hidden");
+        //coverageComponent.setGene
+
+
+    }
+    function handleDoubleClick() {
+        console.log("dble click");
+        comp.setGene('all');
+    }
 
     svg.selectAll(".coverageLine").remove();
     svg.selectAll(".coverageLine")
@@ -86,5 +165,7 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
         .attr("stroke", (d, i) => fillBelowLine ? d3color(colours[i]).darker(2) : colours[i])
         .attr('d', pathGenerator)
         .on("mouseout", handleMouseOut)
-        .on("mousemove", handleMouseMove);
+        .on("mousemove", handleMouseMove)
+        .on("click", handleMouseClick)
+        .on("dblclick", handleDoubleClick);
 }

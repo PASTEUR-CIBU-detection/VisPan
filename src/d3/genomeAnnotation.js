@@ -31,8 +31,7 @@ export const getLeftRightTop = (that, scales) => {
 /* draw the genes (annotations) */
 export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, hoverSelection) => {
   // svg.selectAll(".gene").remove(); /* only added once, don't need to remove what's not there */
-  //console.log(genes)
-  console.log(genes);
+  
   let k=0;
   let amplisname = []
   for (let g in genes){
@@ -50,7 +49,7 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
     //amplisname[k] = genes[g].amplis
 
   }
-  console.log(amplisname);
+  //console.log(amplisname);
 
   function handleAmpliconMove(d, i) {
     const [left, right, top] = getLeftRightTop(this, scales);
@@ -60,7 +59,7 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
       .style("top", top)
       .style("visibility", "visible")
       //.html(`Amplicon name ${i + 1} – ${d[0]}-${d[1]}bp`);
-      .html(`Amplicon name `+ amplisname[i]);
+      .html(`Amplicon `+ amplisname[i]);
     }
   function handleGeneMove(d, i) {
     const [left, right, top] = getLeftRightTop(this, scales);
@@ -69,7 +68,7 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
       .style("right", right)
       .style("top", top)
       .style("visibility", "visible")
-      .html(`Gene ${d}<br/> ${genes[d].start} - ${genes[d].end}`);
+      .html(`Target ${d}<br/> ${genes[d].start} - ${genes[d].end}`);
   }
 
   function handleGeneClick(d,i){
@@ -156,7 +155,7 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
 
   const ampliconRoof = chartGeom.height - chartGeom.spaceBottom + 24; /* all primers & genes below this */
   const ampliconHeight = 8;
-  console.log(amplicons);
+  //console.log(amplicons);
   if (amplicons) {
     svg.append("g")
       .attr("id", "amplicons")
@@ -178,31 +177,88 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
   const calcYOfGene = (name) => genes[name].strand === 1 ? geneRoof : geneRoof+geneHeight;
 
   const geneNames = Object.keys(genes);
+  console.log(geneNames);
+  let geneNamesFilter = {};
+  //geneNamesFilter.push("ii");
 
+  console.log(geneNames);
+  if (geneNames.length > 30){
+    let n;
+
+    if(geneNames.length < 100){
+      n = parseInt(geneNames.length /10);
+      
+    
+    }
+    else {
+      n = parseInt(geneNames.length /10);
+      n =  parseInt(geneNames.length / n);
+    }
+
+    
+
+    
+    //let k =0;
+    for (let i = 0; i < geneNames.length; i=i+n) {
+      console.log(i);
+      console.log(geneNames[i]);
+      geneNamesFilter[geneNames[i]]="#005c68";
+      //k++;
+    }
+  }
+  else{
+    for (let i = 0; i < geneNames.length; i=i+1) {
+      if(i%2 == 0){
+        geneNamesFilter[geneNames[i]]="#005c68";
+      }
+      else{
+        geneNamesFilter[geneNames[i]]="#E6DFC1"; 
+      }
+    }
+  }
+  console.log(geneNamesFilter);
   const genesSel = svg.selectAll(".gene")
     .data(geneNames)
     .enter()
     .append("g");
+  
+
+  /*console.log(geneNamesFilter['Bordetella']);
+  if ('Strepto' in geneNamesFilter){
+    console.log(geneNamesFilter['Strepto']);
+  }
+  if(geneNamesFilter['Bordetella']!== undefined){
+    console.log("ici");
+
+  }*/
 
   genesSel.append("rect")
-    .attr("class", "gene")
+    //.attr("class", "gene")
     .attr("x", (name) => scales.x(genes[name].start))
     .attr("y", calcYOfGene)
     .attr("width", (name) => scales.x(genes[name].end) - scales.x(genes[name].start))
     .attr("height", geneHeight)
+    .attr("fill",(name) => (name in geneNamesFilter)   ? geneNamesFilter[name] : "#E6DFC1")
     .on("mouseout", handleMouseOut)
     .on("mousemove", handleGeneMove)
     .on("click", handleGeneClick);
 
+  
+  
+
   genesSel.append("text")
-      .attr("class", "gene-text")
+      //.attr("class", "gene-text")
       .attr("x", (name) => scales.x(genes[name].start) + (scales.x(genes[name].end) - scales.x(genes[name].start))/2)
-    .attr("y", calcYOfGene)
-    .attr("dy", "12px") /* positive values bump down text */
-    .attr("text-anchor", "middle") /* centered horizontally */
-    .attr("font-size", "12px")
-    .attr("font-weight", "600")
-    .attr("alignment-baseline", "bottom") /* i.e. y value specifies top of text */
-    .attr("pointer-events", "none") /* don't capture mouse over */
-    .text((name) => name.length > 10 ? "" : name);
+      .attr("y", calcYOfGene)
+      .attr("dy", "12px") /* positive values bump down text */
+      .attr("text-anchor", "middle") /* centered horizontally */
+      .attr("font-size", "12px")
+      .attr("font-weight", "600")
+      .attr("alignment-baseline", "bottom") /* i.e. y value specifies top of text */
+      .attr("pointer-events", "none") /* don't capture mouse over */
+      //.text((name) => name.length > 10 ? "" : name);
+      //.text((name) => (geneNamesFilter[name]!== undefined)  ? "" : name);
+      .attr("visibility",(name) => (name in geneNamesFilter)   ? "true" : "hidden")
+      .text((name) => (name in geneNamesFilter)  ? name : "");
+
 };
