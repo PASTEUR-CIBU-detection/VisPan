@@ -321,7 +321,7 @@ class RacebarPlot extends React.Component {
   }
   componentDidUpdate(){
 
-    console.log("RaceBar update");
+    //console.log("RaceBar update");
     let data =[];
     for (const [key, value] of Object.entries(this.props.data)) {
         //console.log(`${key}: ${value}`);
@@ -341,7 +341,7 @@ class RacebarPlot extends React.Component {
     //this.xAxis.data.setAll(data);
     this.series1.data.setAll(data);
     
-    console.log(this.xAxis.dataItems);
+    //console.log(this.xAxis.dataItems);
 
     /*this.xAxis.dataItems.sort(function (x, y) {
       //return x.get("index") - y.get("index");

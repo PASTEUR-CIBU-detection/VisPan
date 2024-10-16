@@ -64,8 +64,8 @@ class CoveragePlot extends React.Component {
             let geneName = event.value;
             this.setGene(geneName);
             
-            console.log(this.state);
-            console.log(event);
+            //console.log(this.state);
+            //console.log(event);
             //console.log(this);
             /*if(event.value == "all"){
                 ///gene = {};
@@ -112,16 +112,16 @@ class CoveragePlot extends React.Component {
             
         
         this.updateChart = (event) => {
-            console.log(event);
+            //console.log(event);
         }
 
         this.brushstart = (selection) => {
-            console.log("brushstart");
-            console.log(selection);
+            //console.log("brushstart");
+            //console.log(selection);
         }
         this.brushed = (selection) => {
-            console.log("brushsed");
-            console.log(selection);
+            //console.log("brushsed");
+            //console.log(selection);
         }
 
         this.options =[];
@@ -129,7 +129,7 @@ class CoveragePlot extends React.Component {
         for (const property in this.props.config.genome.genes) {
            /// this.options = [
            let option= {value: property, label:property };
-           console.log(option);
+           //console.log(option);
            this.options[i] = option;
             //console.log(property);
             i++
@@ -186,7 +186,7 @@ class CoveragePlot extends React.Component {
        
         let  size = this.props.config.genome.length;
 
-        console.log(getLogYAxis(this.props.config));
+        //console.log(getLogYAxis(this.props.config));
         
         let xScale = calcXScale(this.state.chartGeom, this.props.config.genome.length);
         let yScale = this.state.showReferenceMatches ?
@@ -224,11 +224,11 @@ class CoveragePlot extends React.Component {
                     colour: this.props.sampleColours[name] || "#FFFFFF"
                 }));
             
-            console.log(Object.keys(this.state.gene).length);
+            //console.log(Object.keys(this.state.gene).length);
             //if (this.state.gene != {}){
             if (Object.keys(this.state.gene).length !== 0){
 
-                console.log(this.state.gene);
+                //console.log(this.state.gene);
                 let name = this.state.gene.nameGene;
                 
                 let g2 ={};   
@@ -262,7 +262,7 @@ class CoveragePlot extends React.Component {
                     calcYScale(this.state.chartGeom, 100) :
                     calcYScale(this.state.chartGeom, maxval, {log: getLogYAxis(this.props.config)});
 
-                console.log(yScale);
+                //console.log(yScale);
 
             }
 
@@ -326,9 +326,9 @@ class CoveragePlot extends React.Component {
                     k++;
                 }
             }
-            console.log("ICI");
+            
             let comp = this;
-            console.log(comp);
+            //console.log(comp);
             const hoverDisplayFunc = ({name, xValue, yValue}) => (`Sample: ${name}<br/>Pos: ${xValue}<br/>Depth: ${Math.round(yValue)}x`);
             drawSteps({
                 svg: this.state.svg,
@@ -348,7 +348,7 @@ class CoveragePlot extends React.Component {
             drawGenomeAnnotation(this.state.svg, this.state.chartGeom, scales, g, amplis, this.state.hoverSelection);
 
              // Add the brushing
-            console.log(this.state.svg);
+           // console.log(this.state.svg);
             //this.state.svg.attr("viewBox", [0, 0, 500, 300]).style("display", "block");
             /*this.state.svg.append("rect")
                 .classed("border-box", true)
@@ -378,14 +378,14 @@ class CoveragePlot extends React.Component {
                     svg.dispatch("input");
                     focusedArea = svg.property('value');
                     update();*/
-                    console.log(selection);
+                   // console.log(selection);
                 }
             }
 
             function brushend({selection}) {
-                if (selection) {
-                    console.log(selection);
-                }
+                //if (selection) {
+                    //console.log(selection);
+                //}
                 /*console.log(event);
                 if (!event.source.target) return;
                 if (event.selection !== null) {
@@ -396,7 +396,7 @@ class CoveragePlot extends React.Component {
             /*this.state.svg.append("g")
                 .call(this.brush);*/
             this.state.svg.append("g").call(brush);
-            console.log("add brush");
+            //console.log("add brush");
         //}
     }
     componentDidMount() {
@@ -476,7 +476,7 @@ class CoveragePlot extends React.Component {
             gene.start = g.start;
             gene.end = g.end;
             gene.strand = g.strand;
-            console.log(gene);
+            //console.log(gene);
             gene.nameGene = geneName;
             this.state.gene = gene;
             this.redraw();
@@ -486,16 +486,16 @@ class CoveragePlot extends React.Component {
     
     setGeneOld(name,gene){
         //this.props.amplicons
-        console.log("##############################");
-        console.log(this.state);
+        //console.log("##############################");
+        //console.log(this.state);
         //tab.filter(item => {return (item[0]>a )&&(item[0]<b)} )
         // get amplicons that belong to a gene
-        console.log(name);
-        console.log(gene);
+        //console.log(name);
+        //console.log(gene);
         //console.log(gene.start+" "+gene.end);
         let amplis = filterampli(this.props.config.primers.amplicons,gene.start,gene.end);
         //console.log(this.props.config.primers.amplicons);
-        console.log(amplis);
+        //console.log(amplis);
         function filterampli(tab, a, b) {
             return tab.filter(item => {return (item[0]>a )&&(item[0]<b)})
             //tab.filter(item => {return (item[0]>a )&&(item[0]<b)} )
@@ -515,8 +515,8 @@ class CoveragePlot extends React.Component {
             //console.log(amplis[i]);
             amplisNew[i] = [amplis[i][0]-shift,amplis[i][1]-shift];
         }
-        console.log("amplis");
-        console.log(amplisNew);
+        //console.log("amplis");
+        //console.log(amplisNew);
         const ySuffix = this.state.showReferenceMatches ? "%" : "x";
         //drawAxes(this.state.svg, this.state.chartGeom, scales, {xSuffix: "bp", ySuffix});
         let g ={};
@@ -524,7 +524,7 @@ class CoveragePlot extends React.Component {
         //gene.end = gene.end -gene.start;
         //gene.start = 0 
         
-        console.log(gene);
+        //console.log(gene);
         g[name]= gene;
         //drawGenomeAnnotation(this.state.svg, this.state.chartGeom, scales, g, amplisNew, this.state.hoverSelection);
         //drawGenomeAnnotation(this.state.svg, this.state.chartGeom, scales, g, amplis, this.state.hoverSelection);
@@ -544,11 +544,11 @@ class CoveragePlot extends React.Component {
                 console.log(d.xyValues[0]);
                 return d.xyValues[0]> 150000
               });*/
-        console.log(data);
+        //console.log(data);
         //let xYValNew = [];
         
-        console.log(data[0]);
-        console.log(data[0].xyValues);
+       // console.log(data[0]);
+        //console.log(data[0].xyValues);
 
         let xYValNew = filterampli(data[0].xyValues,gene.start,gene.end);
 
@@ -558,9 +558,9 @@ class CoveragePlot extends React.Component {
             //xYValNew[i] = [data[0].xyValues[i][0],data[0].xyValues[i][1]];
         }*/
 
-        console.log(xYValNew);
+        //console.log(xYValNew);
         
-        console.log(data);
+        //console.log(data);
 
         let maxval = -1;
         for (let i = 0; i < xYValNew.length; i++) {
@@ -577,7 +577,7 @@ class CoveragePlot extends React.Component {
 
     
         
-        console.log(maxval);
+        //console.log(maxval);
         /*const yScale = this.state.showReferenceMatches ?
             calcYScale(this.state.chartGeom, 100) :
             calcYScale(this.state.chartGeom, getMaxCoverage(this.props.coverage), {log: getLogYAxis(this.props.config)});*/
@@ -590,7 +590,7 @@ class CoveragePlot extends React.Component {
 
         
         const hoverDisplayFunc = ({name, xValue, yValue}) => (`Sample: ${name}<br/>Pos: ${xValue}<br/>Depth: ${Math.round(yValue)}x`);
-        console.log(this);
+        //console.log(this);
         drawSteps({
             svg: this.state.svg,
             chartGeom: this.state.chartGeom,
@@ -603,7 +603,7 @@ class CoveragePlot extends React.Component {
         });
         drawAxes(this.state.svg, this.state.chartGeom, scales, {xSuffix: "bp", ySuffix});
 
-        console.log(g);
+        //console.log(g);
 
 
         drawGenomeAnnotation(this.state.svg, this.state.chartGeom, scales, g, amplis, this.state.hoverSelection);

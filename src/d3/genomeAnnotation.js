@@ -77,15 +77,15 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
     let x = scales.x(genes[d].start);
     let y = scales.x(genes[d].end);
     //console.log(svg._groups[0][0].viewBox);
-    console.log("click");
-    console.log(genes[d]);
+    //console.log("click");
+    //console.log(genes[d]);
 
     
 
 
     alert("gene "+d+" " +x +" "+y);
 
-    console.log(svg);
+    //console.log(svg);
     /*let view = svg.getAttribute("viewBox");
     console.log(view);
 
@@ -177,31 +177,32 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
   const calcYOfGene = (name) => genes[name].strand === 1 ? geneRoof : geneRoof+geneHeight;
 
   const geneNames = Object.keys(genes);
-  console.log(geneNames);
+  //console.log(geneNames);
   let geneNamesFilter = {};
   //geneNamesFilter.push("ii");
 
-  console.log(geneNames);
+  //console.log(geneNames.length);
   if (geneNames.length > 30){
     let n;
 
-    if(geneNames.length < 100){
+   /* if(geneNames.length < 100){
       n = parseInt(geneNames.length /10);
       
     
     }
     else {
-      n = parseInt(geneNames.length /10);
+     // n = parseInt(geneNames.length /10);
       n =  parseInt(geneNames.length / n);
     }
-
+*/
+    n = parseInt(geneNames.length / 20);
     
-
+    //console.log(n);
     
     //let k =0;
     for (let i = 0; i < geneNames.length; i=i+n) {
-      console.log(i);
-      console.log(geneNames[i]);
+      //console.log(i);
+      //console.log(geneNames[i]);
       geneNamesFilter[geneNames[i]]="#005c68";
       //k++;
     }
@@ -216,7 +217,9 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
       }
     }
   }
-  console.log(geneNamesFilter);
+
+  //console.log(geneNamesFilter);
+  //console.log(Object.keys(geneNamesFilter).length);
   const genesSel = svg.selectAll(".gene")
     .data(geneNames)
     .enter()

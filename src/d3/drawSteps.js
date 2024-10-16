@@ -67,17 +67,19 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
         
         let ampliname=data[i].name;
         if(amplis != null){
-            let xval = d[xyValuesIdx][0];
-            
-            for (let i=0;i<amplis.length;i++){
-                //console.log(amplis[i][0]+" "+amplis[i][1]+" "+xval);
-                if((xval>=amplis[i][0])&&(xval <=amplis[i][1])){
-                    ampliname = amplisname[i];
-                    
-                    break;
-                }
+            if(d[xyValuesIdx]!= null){
+                let xval = d[xyValuesIdx][0];
                 
-               
+                for (let i=0;i<amplis.length;i++){
+                    //console.log(amplis[i][0]+" "+amplis[i][1]+" "+xval);
+                    if((xval>=amplis[i][0])&&(xval <=amplis[i][1])){
+                        ampliname = amplisname[i];
+                        
+                        break;
+                    }
+                    
+                
+                }
             }
 
         }
@@ -101,7 +103,7 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
 
 
 
-        console.log("click");
+        //console.log("click");
         const [left, right, top] = getLeftRightTop(this, scales);
 
         const xValueApprox = scales.x.invert(mouse(this)[0]);
@@ -119,13 +121,13 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
         
         if(genes != null){
             let xval = d[xyValuesIdx][0];
-            console.log(xval);
+            //console.log(xval);
             for (let gene in genes){
-                console.log(gene);
+                //console.log(gene);
                 //console.log(gene.start +" "+gene.end);
                 if((xval>=genes[gene].start)&&(xval <=genes[gene].end)){
                     geneName = gene;
-                    console.log(geneName);
+                    //console.log(geneName);
                     break;
                 }
             }
@@ -142,8 +144,8 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
             }*/
 
         }
-        console.log(geneName);
-        console.log(comp.props.config.genome.genes);
+        //console.log(geneName);
+        //console.log(comp.props.config.genome.genes);
         comp.setGene(geneName);
         if (!hoverSelection) return;
         hoverSelection.style("visibility", "hidden");

@@ -20,13 +20,14 @@ import { color as d3color } from "d3-color";
 /**
  * Heatmap scale over 0-100 (i.e. percentage)
  */
-export const heatColourScale = scaleSequential(chromatic.interpolateYlOrRd)
+//export const heatColourScale = scaleSequential(chromatic.interpolateYlOrRd)
+
+export const heatColourScale = scaleSequential(chromatic.interpolateReds)
   .domain([0, 100]);
 /*export const heatColourScale = scaleSequential(chromatic.interpolateGreys)
   .domain([0, 100]);*/
 /*export const heatColourScale = scaleSequentialPow(chromatic.interpolateGreys)
   .domain([0, 100]);*/
-
 
 
 export const defaultLineColour = "#F6EECA";
