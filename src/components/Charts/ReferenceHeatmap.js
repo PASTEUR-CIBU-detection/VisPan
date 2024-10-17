@@ -63,7 +63,7 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
     console.log(referencePanel);*/
 
     const d3data = Array.from(new Array(names.length*referencePanel.length));
-    console.log(d3data);
+    
     let dataIdx = 0;
 
     let maxCount = 0;
@@ -90,7 +90,10 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
             const sampleTotal = parseInt(data[names[sampleIdx]].refMatches['total']) || 1;
             const percentOfSample = (100.0 * count) / sampleTotal;
             const percentOfTotal = (100.0 * count) / total;
-            const heat = (100.0 * count) / (relativeReferenceMapping ? maxCount : sampleTotal);
+            //const heat = (100.0 * count) / (relativeReferenceMapping ? maxCount : sampleTotal);
+            
+            const heat = (100.0 * count) /  maxCount;
+            
             d3data[dataIdx] = {
                 sampleIdx,
                 refIdx,
@@ -208,6 +211,8 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
         .attr("x", d => scales.x(d.sampleIdx) + cellDims.padding)
         .attr("y", d => scales.y(d.refIdx+1) + cellDims.padding)
         .attr("fill", d => d.count === 0 ? EMPTY_CELL_COLOUR : heatColourScale(d.heat))
+        //.attr("fill", d => d.count === 0 ? EMPTY_CELL_COLOUR : heatColourScale(d.count))
+        
         .on("mouseout", handleMouseOut)
         .on("mousemove", handleMouseMove);
 
@@ -265,8 +270,8 @@ class ReferenceHeatmap extends React.Component {
             sampleNames.length,     // number of columns
             referencePanel.length   // number of rows
         );
-        console.log(sampleNames+" "+this.props.data);
-        console.log(this.props.data[sampleNames['barcode01']])
+        //console.log(sampleNames+" "+this.props.data);
+        //console.log(this.props.data[sampleNames['barcode01']])
         drawHeatMap({
             names: sampleNames,
             referencePanel,
