@@ -69,10 +69,14 @@ export const drawSteps = ({svg, chartGeom, scales, data, fillBelowLine=false, ho
         if(amplis != null){
             if(d[xyValuesIdx]!= null){
                 let xval = d[xyValuesIdx][0];
-                
+                console.log(d[xyValuesIdx][0]);
                 for (let i=0;i<amplis.length;i++){
-                    //console.log(amplis[i][0]+" "+amplis[i][1]+" "+xval);
+                    console.log(amplis[i][0]+" "+amplis[i][1]+" "+  amplisname[i]+" "+xval);
+
                     if((xval>=amplis[i][0])&&(xval <=amplis[i][1])){
+
+                        console.log(amplis[i][0]+" "+amplis[i][1]);
+                        console.log(amplisname[i]);
                         ampliname = amplisname[i];
                         
                         break;
