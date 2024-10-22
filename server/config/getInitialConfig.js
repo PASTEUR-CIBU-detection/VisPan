@@ -204,8 +204,8 @@ function setUpDisplaySettings(config) {
     config.display = {
         numCoverageBins: 1000, /* how many bins we group the coverage stats into */
         readLengthResolution: 10,
-        referenceMapCountThreshold: 5,
-        maxReferencePanelSize: 10,
+        referenceMapCountThreshold: 0,
+        maxReferencePanelSize: 40,    //10
         coverageThresholds: {
             // ">200x": 200, "0x": 0
             // ">2000x": 2000, ">200x": 200, ">20x": 20, "0x": 0

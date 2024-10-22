@@ -195,7 +195,7 @@ export const drawGenomeAnnotation = (svg, chartGeom, scales, genes, amplicons, h
       n =  parseInt(geneNames.length / n);
     }
 */
-    n = parseInt(geneNames.length / 20);
+    n = parseInt(geneNames.length / 10);
     
     //console.log(n);
     
