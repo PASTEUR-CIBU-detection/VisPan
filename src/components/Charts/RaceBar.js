@@ -248,7 +248,7 @@ class RacebarPlot extends React.Component {
     this.series1.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5, strokeOpacity: 0 });
 
         // Add label bullet    //???
-    this.series1.bullets.push(function () {
+    /*this.series1.bullets.push(function () {
       return am5.Bullet.new(root, {
         locationX: 1,
         sprite: am5.Label.new(root, {
@@ -263,8 +263,40 @@ class RacebarPlot extends React.Component {
           populateText: true
         })
       });
+    });*/
+
+
+
+    this.series1.bullets.push(function () {
+      let label = am5.Label.new(root, {
+
+        text: "{mappedcount.formatNumber('#.# a')}",
+        //fill: root.interfaceColors.get("alternativeText"),
+        fill: "white",
+        centerX: am5.p100,
+        centerY: am5.p100,
+        //fill: am5.Color.lighten(this.series1.get("fill"), 0.7)
+        populateText: true
+
+      });
+      //console.log(label);
+      label.adapters.add("text", function (text, target) {
+        //console.log(target.dataItem.v);
+        //if (target.dataItem && target.dataItem.valueX == "0")
+         // return "";
+        if (target.dataItem.get("valueY") === 0) {
+          return "";
+        }
+      
+        return text;
+      });
+      return am5.Bullet.new(root, {
+        locationX: 1,       
+        //sprite: (mappedcount>0)?label:null       
+        sprite:label       
+        });
     });
-    
+
     //console.log(this.props);
     let props = this.props;
     console.log(this.props);

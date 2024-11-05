@@ -77,7 +77,7 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
             total += count;
         }
     }
-    maxCount = Math.log(maxCount)
+    maxCount = Math.sqrt(maxCount)
 
     // relativeReferenceMapping
     // if true then the heat is relative to the largest value, if false then it is the percentage
@@ -93,7 +93,7 @@ const drawHeatMap = ({names, referencePanel, data, svg, scales, cellDims, chartG
             const percentOfTotal = (100.0 * count) / total;
             //const heat = (100.0 * count) / (relativeReferenceMapping ? maxCount : sampleTotal);
             
-            const heat = (100.0 * Math.log(count)) /  maxCount;
+            const heat = (100.0 * Math.sqrt(count)) /  maxCount;
             
             d3data[dataIdx] = {
                 sampleIdx,
