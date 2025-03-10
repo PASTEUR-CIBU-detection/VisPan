@@ -6,7 +6,12 @@ These instructions assume that you have installed [MinKNOW](https://community.na
 
 ## Install from conda
 
-We also assume that you are using conda -- See [instructions here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) to install conda on your machine.
+We also assume that you are using conda with Miniforge-- See [instructions here](https://github.com/conda-forge/miniforge) to install conda on your machine.
+ 
+```bash
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh
+source  /root/miniforge3/etc/profile.d/conda.sh 
 
 ### Step 1: Create a new conda environment or install nodejs into your current conda environment
 
@@ -47,7 +52,7 @@ Python, biopython, snakemake and minimap2 are required
 
 ```bash
 conda install -y "python>=3.6"
-conda install -y anaconda::biopython 
+conda install -c conda-forge biopython 
 conda install -y -c conda-forge -c bioconda "snakemake-minimal=5.8.1" # later snakemake versions will not work currently
 conda install -y bioconda::minimap2=2.17
 ```
