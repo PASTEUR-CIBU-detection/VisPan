@@ -164,6 +164,8 @@ class RacebarPlot extends React.Component {
         wheelY: "zoomX"
       }),
     );
+
+   
     // set the charts color
     //var myTheme = am5.Theme.new(root);
     
@@ -217,7 +219,7 @@ class RacebarPlot extends React.Component {
         tooltip: am5.Tooltip.new(root, {})
       })
     );
-    console.log(this.xAxis.renderer);
+    //console.log(this.xAxis.renderer);
     //this.xAxis.renderer.minGridDistance = 30;
 
     
@@ -303,10 +305,17 @@ class RacebarPlot extends React.Component {
 
     // click on a bar goes to corresponding color Panel
     this.series1.columns.template.events.once("click", function(ev) {
-        console.log("Clicked on a column", ev.target);
-        console.log(series1.columns.indexOf(ev.target));
-        console.log(props);
-        props.goToSamplePanel(samples[series1.columns.indexOf(ev.target)]);
+        //console.log("Clicked on a column !!!!!", ev.target);
+        console.log("Clicked on a column !!!!!", ev.target.dataItem.dataContext.name);
+        //console.log(chart);
+        //console.log(chart.startIndex());
+        //console.log(chart.endIndex());
+
+        //console.log(series1.columns.indexOf(ev.target));
+        //console.log(props);
+        //props.goToSamplePanel(samples[series1.columns.indexOf(ev.target)]);
+        props.goToSamplePanel(ev.target.dataItem.dataContext.name);
+        
     });
 
     // draw columns with data colors
@@ -323,14 +332,17 @@ class RacebarPlot extends React.Component {
         //return chart.get("colors").getIndex(series1.columns.indexOf(target));
         
         if (data[series1.columns.indexOf(target)] !== undefined){
-          return props.sampleColours[samples[series1.columns.indexOf(target)].name];
+          //return props.sampleColours[samples[series1.columns.indexOf(target)].name];
+          return props.sampleColours[target.dataItem.dataContext.name];
         }
     });
     this.series1.columns.template.adapters.add("fill", function(fill, target) {
         //return chart.get("colors").getIndex(series1.columns.indexOf(target));
         
         if (data[series1.columns.indexOf(target)] !== undefined){
-          return  props.sampleColours[data[series1.columns.indexOf(target)].name];
+          //console.log(target.dataItem.dataContext.name);
+          //return  props.sampleColours[data[series1.columns.indexOf(target)].name];
+          return props.sampleColours[target.dataItem.dataContext.name];
         }
     });
 

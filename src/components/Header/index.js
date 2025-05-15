@@ -64,8 +64,8 @@ class Header extends React.Component {
 
         <div className="title">
           <h2 style={{marginTop: "0px", marginBottom: "8px"}}>
-            <span style={{fontSize: "1.8em", fontWeight: "normal"}}>RAMPART</span>
-            <span style={{fontWeight: "100"}}> Read Assignment, Mapping, and Phylogenetic Analysis in Real Time</span>
+            <span style={{fontSize: "1.8em", fontWeight: "normal"}}>VISPAN</span>
+            <span style={{fontWeight: "100"}}> Visualisation of Panel for rapid pathogen detection</span>
           </h2>
 
           <h3>{`Experiment: ${this.props.config.run ? `${this.props.config.run.title}` : "untitled"}`}</h3>
