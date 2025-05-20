@@ -42,3 +42,6 @@ binned*
 
 # snakemake stuff
 .snakemake/
+
+# package-lock.json
+package-lock.json
