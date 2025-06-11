@@ -29,16 +29,12 @@ const Container = styled.div`
 const Footer = () => {
   return (
     <Container>
-      {`RAMPART v${version} is built by `}
-      <a href={"https://twitter.com/hamesjadfield"} target="_blank" rel="noopener noreferrer">James Hadfield</a>
-      {", "}
-      <a href={"https://twitter.com/pathogenomenick"} target="_blank" rel="noopener noreferrer">Nick Loman</a>
-      {" and "}
-      <a href={"https://twitter.com/arambaut"} target="_blank" rel="noopener noreferrer">Andrew Rambaut</a>
-      {" as part of the "}
-      <a href={"http://artic.network"} target="_blank" rel="noopener noreferrer">ARTIC Network</a>
+      {`VisPan v${version} is adapted from `}
+      <a href={"https://artic.network/rampart"} target="_blank" rel="noopener noreferrer">Rampart</a>
       {" project"}
-      <br />{ "Funded through The Wellcome Trust Collaborators Award 206298_A_17_Z."}
+      <br />{ "for "}
+      <a href={"https://research.pasteur.fr/en/team/environment-and-infectious-risks/"} target="_blank" rel="noopener noreferrer">ERI-CIBU</a>
+      { " INSTITUT PASTEUR"}
     </Container>
   )
 }
