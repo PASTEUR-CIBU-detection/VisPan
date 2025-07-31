@@ -3,6 +3,7 @@
 
 These instructions assume that you have installed [MinKNOW](https://community.nanoporetech.com/downloads) and are able to run it.
 
+**To use VisPan, first you need to install rampart with conda !**
 
 ## Install from conda
 
@@ -83,8 +84,9 @@ rampart --help
 (1) Clone the Github repo 
 
 ```bash
-git clone https://github.com/artic-network/rampart.git
-cd rampart
+
+git clone git@gitlab.pasteur.fr:cibu-detection/VisPan.git
+cd VisPan
 ```
 
 (2) Create an activate the conda environment with the required dependencies.
@@ -101,18 +103,18 @@ conda activate artic-rampart
 npm install
 ```
 
-(4) Build the RAMPART client bundle
+(4) Build the VISPAN client bundle
 
 ```bash
 npm run build
 ```
 
 (5) (optional, but recommended) install rampart globally within the conda environment
-so that it is available via the `rampart` command
+so that it is available via the `vispan` command
 
 ```bash
 npm install --global .
 ```
 
-Check that things work by running `rampart --help`
+Check that things work by running `vispan --help`
 
