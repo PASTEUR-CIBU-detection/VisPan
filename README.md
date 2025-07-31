@@ -1,7 +1,7 @@
 # VISPAN
 Real-time visualization of multiplex syndromic PCR panel sequencing for rapid pathogens detection.
 
-![](docs/images/main.png)
+![](docs/images/vispanCapture.jpg)
 
 
 ## Motivation
