@@ -109,12 +109,5 @@ npm install
 npm run build
 ```
 
-(5) (optional, but recommended) install rampart globally within the conda environment
-so that it is available via the `vispan` command
-
-```bash
-npm install --global .
-```
-
 Check that things work by running `vispan --help`
 
