@@ -5,7 +5,7 @@ These instructions assume that you have installed [MinKNOW](https://community.na
 
 **To use VisPan, first you need to install rampart with conda !**
 
-## Install from conda
+## Install Rampart from conda
 
 We also assume that you are using conda with Miniforge-- See [instructions here](https://github.com/conda-forge/miniforge) to install conda on your machine.
  
@@ -79,7 +79,7 @@ rampart --help
 
 ---
 
-## Install from source
+## Install VisPan from source
 
 (1) Clone the Github repo 
 
@@ -109,5 +109,5 @@ npm install
 npm run build
 ```
 
-Check that things work by running `vispan --help`
+Check that things work by running `vispan --help` in the VisPan install directory
 
