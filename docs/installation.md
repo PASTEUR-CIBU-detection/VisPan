@@ -100,6 +100,7 @@ conda activate artic-rampart
 (3) Install dependencies using `npm`
 
 ```bash
+export NODE_OPTIONS=--openssl-legacy-provider
 npm install
 ```
 
