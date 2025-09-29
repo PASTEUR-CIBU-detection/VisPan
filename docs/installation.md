@@ -1,114 +1,43 @@
 # Installation
 
+To use VisPan, you must first install RAMPART with conda!
 
-These instructions assume that you have installed [MinKNOW](https://community.nanoporetech.com/downloads) and are able to run it.
+## Step 1 : RAMPART Installation
 
-**To use VisPan, first you need to install rampart with conda !**
-
-## Install Rampart from conda
-
-We also assume that you are using conda with Miniforge-- See [instructions here](https://github.com/conda-forge/miniforge) to install conda on your machine.
- 
-```bash
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh
-source  /root/miniforge3/etc/profile.d/conda.sh 
-
-### Step 1: Create a new conda environment or install nodejs into your current conda environment
-
-Create a new conda environment and activate it via:
-
-```bash
-conda create -n artic-rampart -y nodejs=12 # any version >10 should be fine
-conda activate artic-rampart
-```
-
-Or install NodeJS into your currently activated environment via:
-
-```bash
-conda install -y nodejs=12 # any version >10 should be fine
-```
-
-### Step 2: Install RAMPART
-
-```bash
-conda install -y artic-network::rampart
-```
-
-...this will install the latest release. To install a particular version (say, 1.1.0) use:
-
-```bash
-conda install -y artic-network::rampart=1.1.0
-```
-
-### Step 3: Install dependencies
-
-Note that you may already have some or all of these in your environment, in which case they can be skipped.
-Additionally, some are only needed for certain analyses and can also be skipped as desired.
-
-> If you are installing RAMPART into the [artic-ncov2019](https://github.com/artic-network/artic-ncov2019) conda environment, you will already have all of these dependencies.
-
-
-Python, biopython, snakemake and minimap2 are required
-
-```bash
-conda install -y "python>=3.6"
-conda install -c conda-forge biopython 
-conda install -y -c conda-forge -c bioconda "snakemake-minimal=5.8.1" # later snakemake versions will not work currently
-conda install -y bioconda::minimap2=2.17
-```
-
-If you are using MinKNOW to separate samples by barcodes, you don't need Porechop,
-however if you require RAMPART to perform demuxing then you must install the ARTIC fork of Porechop:
-
+Install dependencies 
 ```bash
 python -m pip install git+https://github.com/artic-network/Porechop.git@v0.3.2pre
-```
-
-If you wish to use the post-processing functionality available in RAMPART to bin reads, then you'll need `binlorry`:
-
-```bash
 python -m pip install binlorry==1.3.0_alpha1
 ```
-
-### Step 4: Check that it works
-
-```
-rampart --help
-```
-
----
-
-## Install VisPan from source
-
-(1) Clone the Github repo 
-
+Install Rampart
 ```bash
-
-git clone git@gitlab.pasteur.fr:cibu-detection/VisPan.git
-cd VisPan
-```
-
-(2) Create an activate the conda environment with the required dependencies.
-You can either follow steps 1 & 3 above, or use the provided `environment.yml` file via
-
-```bash
+git clone https://github.com/artic-network/rampart.git
+cd rampart/
 conda env create -f environment.yml
 conda activate artic-rampart
 ```
-
-(3) Install dependencies using `npm`
-
+This step is necessary to use the post-processing feature and export reads.
 ```bash
+pip install --upgrade binlorry 
+```
+Check that it works
+```bash
+rampart --help
+```
+
+## Step 2 : VISPAN installation
+
+install VisPan from source
+```bash
+git clone https://gitlab.pasteur.fr/cibu-detection/VisPan.git
+cd VisPan/
 export NODE_OPTIONS=--openssl-legacy-provider
 npm install
-```
-
-(4) Build the VISPAN client bundle
-
-```bash
 npm run build
 ```
-
-Check that things work by running `vispan --help` in the VisPan install directory
+Check that it works with the sample dataset and configuration files from the respiratory panel.
+```bash
+./vispan.js --basecalledPath  /path-to-datatset/dataset/ --protocol  /path-to-panels-panRespi/panels/panRespi/ --clearAnnotated
+```
+In a browser at [localhost:3000](http://localhost:3000) view data & interact with the results.
 
