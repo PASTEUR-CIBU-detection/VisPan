@@ -14,7 +14,8 @@
 
 const express = require('express');
 const path = require('path');
-const SocketIO = require('socket.io');
+//const SocketIO = require('socket.io');
+const { Server } = require("socket.io");
 var portfinder = require('portfinder');
 const { initialConnection, setUpIOListeners } = require("./socket");
 const { log, warn, fatal } = require("./utils");
@@ -91,8 +92,15 @@ const run = async ({devClient, ports}) => {
     }
 
     /*     S  O  C  K  E  T     */
-    global.io = SocketIO.listen(socketPort);
+    // global.io = SocketIO.listen(socketPort);
     // TODO - handle EADDRINUSE error. Tried above method & try/catch without success
+    global.io = new Server(socketPort, {
+        cors: {
+            origin: "*", // Attention : à restreindre en production pour la sécurité
+            methods: ["GET", "POST"]
+        }
+    });
+
     global.io.on('connection', (socket) => {
         log('client connection detected');
         initialConnection(socket);
