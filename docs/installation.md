@@ -1,4 +1,4 @@
-# Installation
+# Installation and Quick Start
 
 To use VisPan, you must first install RAMPART with conda!
 
@@ -35,6 +35,8 @@ export NODE_OPTIONS=--openssl-legacy-provider
 npm install
 npm run build
 ```
+## Step 3 : VISPAN Quick Start
+
 Check that it works with the sample dataset and configuration files from the respiratory panel.
 ```bash
 ./vispan.js --basecalledPath  /path-to-datatset/dataset/ --protocol  /path-to-panels-panRespi/panels/panRespi/ --clearAnnotated
