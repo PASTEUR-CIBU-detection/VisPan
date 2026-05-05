@@ -43,3 +43,4 @@ Check that it works with the sample dataset and configuration files from the res
 ```
 In a browser at [localhost:3000](http://localhost:3000) view data & interact with the results.
 
+![](images/vispanCapture.jpg)
